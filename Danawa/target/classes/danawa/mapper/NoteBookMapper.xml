@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="danawa.mapper.NoteBookMapper">
+
+	<select id="allNoteBook" resultType="danawa.entity.NoteBookInfo" parameterType="danawa.pagemaker.Criteria">
+		select distinct * from NoteBookInfo limit #{pageStart},#{pagePerNum};
+	</select>
+	
+	<select id="mallinfo" parameterType="danawa.entity.NoteBookInfo" resultType="danawa.entity.Mallinfo">
+		select * from MallInfo where modelnum = #{subject} order by price asc limit 4;
+	</select>
+	
+	<select id="oneNoteBook" parameterType="danawa.entity.NoteBookInfo" resultType="danawa.entity.NoteBookInfo">
+		select * from NoteBookInfo where subject = #{subject};
+	</select>
+	
+	<select id="NotebookTotal" resultType="int">
+		select count(*) from NoteBookInfo;
+	</select>
+	
+	<select id="mallinfoDetail" parameterType="danawa.entity.NoteBookInfo" resultType="danawa.entity.Mallinfo">
+		select * from MallInfo where modelnum = #{subject} order by price asc;
+	</select>
+	
+	<select id="classificationNoteBook" resultType="danawa.entity.NoteBookInfo" parameterType="java.util.Map">
+		select * from NoteBookInfo 			
+		<trim prefix="where" prefixOverrides="and">
+			<foreach collection="map" index="key" item="val">
+				<trim prefix="and">
+				<if test="key=='company'.toString()">
+					company = #{val}
+				</if>
+				
+				<if test="key=='screeninch'.toString()">
+					screeninch = #{val}
+				</if>
+				
+				<if test="key=='weight'.toString()">
+					weight = #{val}
+				</if>
+				
+				<if test="key=='memory'.toString()">
+					memory = #{val}
+				</if>
+				
+				<if test="key=='usb'.toString()">
+					usb = #{val}
+				</if>
+				
+				<if test="key=='purpose'.toString()">
+					purpose = #{val}
+				</if>
+				
+				<if test="key=='thickness'.toString()">
+					thickness = #{val}
+				</if>
+				</trim>					
+			</foreach>
+		</trim>
+		limit #{page.page.pageStart}, #{page.page.pagePerNum}
+	</select>
+		
+	<select id="totalCount" resultType="int" parameterType="java.util.Map">
+		select count(*) from NoteBookInfo 			
+		<trim prefix="where" prefixOverrides="and">
+			<foreach collection="map" index="key" item="val">
+				<trim prefix="and">
+				<if test="key=='company'.toString()">
+					company = #{val}
+				</if>
+				
+				<if test="key=='screeninch'.toString()">
+					screeninch = #{val}
+				</if>
+				
+				<if test="key=='weight'.toString()">
+					weight = #{val}
+				</if>
+				
+				<if test="key=='memory'.toString()">
+					memory = #{val}
+				</if>
+				
+				<if test="key=='usb'.toString()">
+					usb = #{val}
+				</if>
+				
+				<if test="key=='purpose'.toString()">
+					purpose = #{val}
+				</if>
+				
+				<if test="key=='thickness'.toString()">
+					thickness = #{val}
+				</if>
+				</trim>					
+			</foreach>
+		</trim>
+	</select>
+	
+	
+	<insert id="insertMyProduct" parameterType="danawa.entity.MyProduct">	
+		insert into danawa_mypage 
+		(memIdx , myNoteBookImg , myNoteBook)
+		
+		values(			
+			#{memIdx},
+			#{myNoteBookImg},
+			#{myNoteBook}
+		)
+	</insert>
+	
+	<select id="duplicateCheck" parameterType="danawa.entity.MyProduct" resultType="danawa.entity.MyProduct">
+		select * from danawa_mypage where	
+		memIdx=#{memIdx} and 
+		myNoteBook = #{myNoteBook};
+	</select>
+	
+	<delete id="deleteMyProduct" parameterType="map">
+		delete from danawa_mypage where	memIdx = #{memIdx.memIdx} and
+		<trim suffixOverrides="or"> 
+			<foreach collection="mydata" item="item" separator="or">
+				myNoteBook = #{item}			
+			</foreach>
+		</trim>
+	</delete>
+	
+	<select id="textsearch" parameterType="map" resultType="danawa.entity.NoteBookInfo">
+		select * from NoteBookInfo where	subject like concat('%',#{textSearch},'%') or
+											company like concat('%',#{textSearch},'%')
+									limit #{cri.pageStart},#{cri.pagePerNum};																				
+	</select> 
+	
+	<select id="textSearchCount" parameterType="String" resultType="int">
+		select count(*) from NoteBookInfo where	subject like concat('%',#{searchText},'%') or
+											company like concat('%',#{searchText},'%');											
+	</select> 
+</mapper>

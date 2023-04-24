@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="danawa.mapper.BoardMapper">
+	
+	
+	<sql id="search">
+		<if test="type == 'writer'">
+			where boNickName like concat('%' ,#{keyword}, '%')
+		</if>
+		
+		<if test="type == 'title'">
+			where boTitle like concat('%',#{keyword},'%')
+		</if>
+		
+		<if test="type == 'content'">
+			where boContent like concat('%',#{keyword},'%')
+		</if>
+	</sql>
+	
+	<select id="selectAll" resultType="danawa.entity.Board" parameterType="danawa.pagemaker.Criteria">
+		select * from danawa_board
+		<include refid="search"/>
+		order by boIdx desc limit #{pageStart},#{pagePerNum};			
+	</select>
+	
+	<select id="selectOneNickName" parameterType="danawa.entity.Board" resultType="danawa.entity.Board">
+		select * from goodNickName
+		where boIdx = #{boIdx} and goNickName = #{memId}
+	
+	</select>
+	
+	<select id="selectOne" resultType="danawa.entity.Board" parameterType="danawa.entity.Board">
+		<if test="goNickName == null">
+		select * from danawa_board where boIdx = #{boIdx};
+		</if>
+	
+		<if test="goNickName != null">
+		select b.* , g.goNickName , g.goCount from danawa_board b, goodNickName g 
+		where b.boIdx = g.boIdx and b.boIdx = #{boIdx} and g.goNickName = #{memId};
+		</if>
+	</select>
+	
+	<select id="selectReWrite" parameterType="danawa.entity.Board" resultType="danawa.entity.ReWrite">
+		select * from danawa_reWrite where boGroup = #{boIdx};	
+	</select>
+	
+	 <select id="selectOneNick" resultType="danawa.entity.Board" parameterType="danawa.entity.Board">
+		select b.* , g.goNickName , g.goCount from danawa_board b, goodNickName g 
+		where b.boIdx = g.boIdx and b.boIdx = #{boIdx} and g.goNickName = #{goNickName};
+	</select> 
+	
+	<insert id="insertBoard"  parameterType="danawa.entity.Board">
+		<selectKey resultType="int" order="BEFORE" keyProperty="boIdx" keyColumn="boIdx">
+			select count(*)+1 from danawa_board;
+		</selectKey>
+		
+		insert into danawa_board 
+			(
+			boIdx,
+			memId,
+			boTitle,
+			boContent,
+			boNickName,
+			boPassword,
+			boGroup
+			)
+		values	(
+				#{boIdx},
+				#{memId},
+				#{boTitle},
+				#{boContent},
+				#{boNickName},
+				#{boPassword},
+				#{boIdx}
+				);
+	</insert>
+	
+	
+	<insert id="insertGood" parameterType="danawa.entity.Board">
+		insert into goodNickName (boIdx) values(#{boIdx});
+	</insert>
+	
+	
+	<delete id="deleteGood" parameterType="danawa.entity.Board">				
+		delete from goodNickName where boIdx=#{boIdx};		
+	</delete>
+	
+	
+	
+	<update id="updateBoard" parameterType="danawa.entity.Board">
+		update danawa_board set boTitle = #{boTitle},
+								boContent = #{boContent}
+				where boIdx = #{boIdx};							
+	</update>
+	
+	<delete id="deleteBoard" parameterType="danawa.entity.Board">				
+		delete from danawa_board where boIdx=#{boIdx};		
+	</delete>
+	
+	<update id="addCount" parameterType="danawa.entity.Board">
+		<selectKey order="BEFORE" resultType="int" keyProperty="boCount">
+			select boCount from danawa_board where boIdx = #{boIdx};
+		</selectKey>
+		
+		update danawa_board set boCount = #{boCount}+1
+		where boIdx = #{boIdx};	
+	</update>
+	
+	<insert id="addGood" parameterType="danawa.entity.GoodNickName">	
+		insert into goodNickName values(#{boIdx},#{goNickName},0);
+	</insert>
+	
+		
+	<update id="updateAddGood" parameterType="danawa.entity.GoodNickName">
+			
+		update goodNickName set goNickName = #{goNickName},
+								goCount = 1
+		where boIdx = #{boIdx};						
+	</update>
+	
+	<update id="addTotalGood" parameterType="danawa.entity.Board">
+		<selectKey keyProperty="boGood" resultType="int" order="BEFORE">
+			select boGood from danawa_board where boIdx=#{boIdx};
+		</selectKey>
+		update danawa_board set boGood = #{boGood}+1
+		where boIdx = #{boIdx};	
+	</update>
+	
+								
+	<select id="myGoodCheck" parameterType="danawa.entity.GoodNickName" resultType="int">
+		select count(*) from goodNickName where boIdx = #{boIdx} and goNickName = #{goNickName};
+	</select>
+	
+	<insert id="reWrite" parameterType="danawa.entity.ReWrite">
+		
+		<selectKey keyProperty="reSequence" order="BEFORE" resultType="int">
+			select count(reSequence) from danawa_reWrite where boGroup = #{boGroup};
+		</selectKey>
+			
+		insert into danawa_reWrite
+			(
+			boGroup ,		
+			reContent,
+			reNickName,		
+			reSequence	
+			)
+		values	(
+				#{boGroup},							
+				#{reContent},
+				#{reNickName},				
+				#{reSequence}+1
+				);	
+	</insert>
+	
+	<delete id="deleteReBoard" parameterType="danawa.entity.Board">				
+		delete from danawa_reWrite where boGroup=#{boIdx};		
+	</delete>
+	
+	<select id="myboard" parameterType="danawa.entity.Board" resultType="danawa.entity.Board">
+		select * from danawa_board where memId = #{memId} order by boidx desc;	
+	</select>
+	
+	<select id="totalCount" resultType="int" parameterType="danawa.pagemaker.Criteria">
+		select count(*) from danawa_board
+		<include refid="search"/>
+	</select>
+	
+	<delete id="TestDelete">
+		delete from danawa_board where memId='1';
+	</delete>
+</mapper>

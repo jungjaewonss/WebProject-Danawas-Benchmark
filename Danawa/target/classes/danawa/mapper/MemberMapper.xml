@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="danawa.mapper.MemberMapper">
+	<insert id="joinMember" parameterType="danawa.entity.Member">	
+		insert into danawa_mem 
+		(memId,memPassword,memName,memNickName,memPhone,memProfile) 
+		values(			
+			#{memId},
+			#{memPassword},
+			#{memName},
+			#{memNickName},
+			#{memPhone},
+			#{memProfile}
+		);
+	</insert>
+	
+	<select id="memIdCheck" parameterType="danawa.entity.Member" resultType="int">
+		select count(*) from danawa_mem
+		where memId = #{memId};	
+	</select>
+	
+	<select id="memLogin" parameterType="danawa.entity.Member" resultType="danawa.entity.Member">
+		select * from danawa_mem
+		where memId = #{memId} and
+				memPassword = #{memPassword};	
+	</select>
+	
+	<select id="oneMember" parameterType="danawa.entity.Member" resultType="danawa.entity.Member">
+		select * from danawa_mem where memIdx = #{memIdx};
+	</select>
+	
+	
+	
+	<select id="myItem" parameterType="map" resultType="danawa.entity.MyProduct">
+		select * from danawa_mypage where memIdx = #{member.memIdx}
+		limit #{cri.pageStart},#{cri.pagePerNum};
+	</select>
+	
+	<select id="myItemTotalCount" parameterType="danawa.entity.Member" resultType="int">
+		select count(*) from danawa_mypage where memIdx = #{memIdx}		
+	</select>
+	
+	<update id="updateInfo" parameterType="danawa.entity.Member">
+		update danawa_mem	set memPassword = #{memPassword},
+								memNickName = #{memNickName}
+		where memIdx = #{memIdx};											
+	</update>
+	
+	<select id="oldProfile" parameterType="String" resultType="String">
+		select memProfile from danawa_mem where memIdx = #{memIdx};
+	</select>
+	
+	<update id="updateProfile" parameterType="danawa.entity.Member">
+		update danawa_mem	set memProfile = #{memProfile}
+		where memIdx = #{memIdx};
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+		delete from danawa_mem where memId=#{memId};
+	</delete>
+	
+	<select id="findById" parameterType="string" resultType="danawa.entity.Member">
+		select * from danawa_mem where memId=#{memId};
+	</select>
+</mapper>

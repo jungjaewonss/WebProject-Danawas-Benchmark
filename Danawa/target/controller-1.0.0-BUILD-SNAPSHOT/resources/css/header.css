@@ -1,0 +1,284 @@
+@charset "UTF-8";
+#hiddensubmit{
+ visibility: hidden;
+}
+
+#iconclick{
+ display: none;
+     border: 1px solid black;
+     border-radius: 4px;
+     position: absolute;
+     width: 110px;
+     background-color: white;
+}
+
+
+body{
+     margin: 0px;
+ padding: 0px;    
+ font-family: 'Source Sans Pro', sans-serif
+ 
+ }
+ 
+ #hiddensubmit{
+  visibility: hidden;
+ }
+ 
+ .Allmenu_menu{
+     position: relative;
+     
+     bottom: -15px;
+     padding-top: 18px;
+     color:rgba(255, 255, 255, 0.466) ;
+     font-size: 10px;
+     
+ }
+ 
+ #Allmenu{
+     display: flex;
+     width: 1100px;
+    
+     justify-content: space-around;
+     margin: 0 auto;
+    
+    
+ }
+ 
+ 
+ #Allmenuwrap{
+     background-color:rgba(0, 0, 0, 0.774);
+     height: 250px;
+     margin-top: -30px;
+     padding-top: 20px;
+     visibility: hidden;
+    
+     
+     
+ }
+ 
+ #Allmenuwrap:hover{
+     visibility: hidden;
+ }
+ 
+ 
+ .svmenu{
+     color: rgba(255, 255, 255, 0.863);
+     font-weight: bold;
+     font-size: 15px;
+ }
+ 
+
+ 
+ 
+
+ 
+ 
+  
+ .buttons:hover{
+     cursor: pointer;
+ }
+ 
+
+ 
+ #clicknotebook_1 span:hover , #iconclick span:hover , #clickimpo_1 span:hover{
+     
+    border-radius: 1px;
+     text-decoration: 2px solid underline ;
+     width: 100%;
+     transition:  0.5s;
+    
+ 
+     
+ }
+ 
+ 
+
+ 
+ 
+
+ .menuborderbottom:hover{
+     border-bottom: 5px solid rgba(255, 192, 203, 0.658);
+     border-spacing: 50px;
+     transition: 0.2s;
+     border-radius: 2px;
+ }
+ 
+ #adslide{
+     display: flex;
+     
+ }
+ #fixs{
+     position: sticky;
+     left: 50px;
+     top: 200px;
+     margin: 0 auto;
+ }
+ 
+ 
+ .articlegoods{
+     margin-top: 150px;
+ }
+ 
+ #navwrap{
+     display: flex;
+     width: 100%;
+     margin-bottom: 30px;
+    
+ }
+
+ 
+ #text{
+     width: 500px;
+    
+    
+     /* background-position: right; */
+     
+     height: 50px;
+     /* border: 1px transparent; */ 
+      border-left: 1px solid #c3f8a4;
+     border-top: 1px solid #5df542;
+     border-right: 1px solid #42f5f5;
+     border-bottom: 1px solid #42e3f5;
+     border-radius: 4px;
+ 
+ 
+     /* border: 1px solid #c3f8a4 1px solid #5df542 1px solid #42f5f5 1px solid #42e3f5; */
+ }
+ header{
+     width: 1300px;
+     display: flex;
+    margin: 0 auto;
+     align-items: center;
+     justify-content: space-between;
+     font-family: 'Lato', sans-serif;
+ font-family: 'Source Sans Pro', sans-serif
+    
+    
+ }
+ 
+ nav{
+     width: 1200px;
+     margin: 0 auto;
+    
+ }
+ 
+ 
+ .icons i{
+     padding: 10px;
+     
+ }
+ .icons{
+    
+     display: flex;
+ }
+ 
+ .nav_ul{
+     display: flex;
+     justify-content: space-between;
+     list-style: none;
+     text-decoration: solid underline;  
+ }
+
+ #iconclick div {
+     padding-top : 10px;
+     text-align: center;
+ }
+ 
+ .bestadd{
+     text-align: end;
+ }
+ 
+ #clickimpo_1{
+     border: 1px solid pink;
+     display: none;
+     border-radius: 4px;
+     position: absolute;
+     width: 140px;
+     background-color: white;
+     text-align: center;
+     margin-left: -28px;
+     
+ }
+ #clickimpo_1img{
+     position: relative;
+     top:  5px;
+ }
+ #clickimpo_1 div{
+     padding: 10px;
+    
+     text-align: center;
+ }
+ #clicknotebook_1{
+     display: none;
+     border : 1px solid pink;
+     border-radius: 5px;
+     position: absolute;
+     width: 142px;
+     background-color: white;
+     margin-left: -40px;
+     transition: 0.5s;   
+ }
+ #clicknotebook_1 div{
+     padding: 10px;
+     text-align: center;
+ }
+ #hambuger1 , #hambuger2{
+     position: absolute;
+     margin-top: 4px;
+     margin-left: 3px;
+ }
+ .menu{
+     width: 70px; height: 500px;
+      position: fixed; 
+     border: 1px solid gray;
+     border-radius: 5px;
+     background-color: rgba(0, 0, 0, 0.671);
+     display: flex;
+     flex-direction: column;
+     justify-content: space-around;
+     align-items: center;
+     color: black;
+     top: 400px;    
+ }
+ #horizontal-underline{
+      position: absolute;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.473);
+      top: 70px;
+      left: 0px;
+      height: 4px;
+      transition: 0.5s;
+      border-radius: 10px;     
+ }
+ .menublock{
+     display: block;
+     width: 100%;
+     text-align: center;
+ }
+ 
+#iconclick{
+ width: 140px;
+ text-align: left;
+ border: 1px solid pink;
+
+}
+ #menulogout{
+  position: relative;
+  right: 8px; 
+ }
+#menumodify{
+position: relative;
+  right: 8px; 
+}
+
+#login , #join{
+position: relative;
+right: 10px;
+}
+
+#profile{
+	width: 50px;
+	border-radius: 30px;
+	position: relative;
+	top: 20px;
+}

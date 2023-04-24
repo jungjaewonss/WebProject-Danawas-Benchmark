@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="danawa.mapper.CrawlingMapper">
+	<insert id="InsertMallInfo" parameterType="java.util.List">
+		
+		insert into MallInfo (mallname,modelnum,price,link,logo,shipping)		
+		values
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.mallname},
+			#{item.modelnum},
+			#{item.price},
+			#{item.link},
+			#{item.logo},
+			#{item.shipping}			
+			)
+		</foreach>
+	</insert>
+	
+	
+	<insert id="InsertNoteBook" parameterType="danawa.entity.NoteBookInfo">		
+		insert into NoteBookInfo 
+		
+			values(
+			#{subject},
+			#{screeninch},
+			#{weight},
+			#{company},
+			#{price},
+			#{img},
+			#{memory},
+			#{usb},
+			#{purpose},
+			#{thickness},
+			#{allinfo}			
+			)
+		
+	</insert>
+	
+	<select id="samSung" resultType="danawa.entity.NoteBookInfo">
+		select * from NoteBookInfo where company ='삼성전자' limit 10;	
+	</select>
+	
+	<select id="renova" resultType="danawa.entity.NoteBookInfo">
+		select * from NoteBookInfo where company ='레노버' limit 11;	
+	</select>
+	
+	<select id="lg" resultType="danawa.entity.NoteBookInfo">
+		select * from NoteBookInfo where company ='LG전자' limit 11;	
+	</select>
+</mapper>
